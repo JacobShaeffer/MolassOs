@@ -1,0 +1,88 @@
+[gd_scene load_steps=3 format=3 uid="uid://cthpfb60rifif"]
+
+[ext_resource type="PackedScene" uid="uid://c3qp8ja3nyy5o" path="res://stack.tscn" id="1_qmnas"]
+
+[sub_resource type="GDScript" id="GDScript_mbqdi"]
+script/source = "extends Node2D
+
+var last_mouse_position = Vector2(0,0)
+var relative_mouse_motion = Vector2(0,0)
+
+var drag_sprite = null
+
+var card_held = null
+
+var node_hovered = null
+
+@onready var stacks = [$Stack, $Stack2, $Stack3]
+@onready var card_scene = preload(\"res://card.tscn\")
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	for i in len(stacks):
+		var current_stack = stacks[i]
+		current_stack.mouse_entered.connect(mouse_entered)
+		current_stack.mouse_exited.connect(mouse_exited)
+		var card_instance = card_scene.instantiate()
+		card_instance.setup(i)
+		card_instance.mouse_entered.connect(mouse_entered)
+		card_instance.mouse_exited.connect(mouse_exited)
+		card_instance.change_parent(current_stack)
+		current_stack.add_card(card_instance)
+	
+func mouse_entered(node):
+	node_hovered = node
+	#print(\"node hovered: \", node)
+	
+func mouse_exited(node):
+	if node == node_hovered:
+		node_hovered = null
+	#rint(\"node exited: \", node)
+
+func on_mouse_down():
+	#print(\"pickup: \", node)
+	if node_hovered != null and node_hovered.is_in_group(\"Card\"):
+		card_held = node_hovered
+		drag_sprite = node_hovered.pickup(self)
+		
+func on_mouse_up():
+	#print(\"drop: \", card_held)
+	if card_held != null:
+		drag_sprite.queue_free()
+		drag_sprite = null
+		if node_hovered != null and !node_hovered.has_child:
+			var did_change_parent = card_held.change_parent(node_hovered)
+			if did_change_parent:
+				node_hovered.add_card(card_held)
+		card_held.drop()
+		card_held = null
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	if card_held != null and drag_sprite != null:
+		drag_sprite.position += relative_mouse_motion
+	relative_mouse_motion = Vector2(0, 0)
+
+func _input(event):
+	if event is InputEventMouseMotion:
+		relative_mouse_motion = event.position - last_mouse_position
+		last_mouse_position = event.position
+	elif event is InputEventMouseButton:
+		if event.pressed:
+			on_mouse_down()
+		else:
+			on_mouse_up()
+"
+
+[node name="Main" type="Node2D"]
+position = Vector2(1, -1)
+script = SubResource("GDScript_mbqdi")
+
+[node name="Stack" parent="." instance=ExtResource("1_qmnas")]
+position = Vector2(316, 326)
+
+[node name="Stack2" parent="." instance=ExtResource("1_qmnas")]
+position = Vector2(551, 326)
+
+[node name="Stack3" parent="." instance=ExtResource("1_qmnas")]
+position = Vector2(791, 326)

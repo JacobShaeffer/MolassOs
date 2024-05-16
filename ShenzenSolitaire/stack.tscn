@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3qp8ja3nyy5o"]
+
+[ext_resource type="Texture2D" uid="uid://umfmnc5wj3qj" path="res://icon.svg" id="1_grew4"]
+
+[sub_resource type="GDScript" id="GDScript_sgi2t"]
+script/source = "extends Parent
+
+@export_enum(\"normal\", \"single\", \"count_up\") var stack_type: int
+
+@onready var clickable = $Area2D/CollisionShape2D
+
+func _ready():
+	child_carrier = $Child
+
+func add_card(node):
+	super(node)
+	clickable.disabled = true
+	
+func remove_card(node):
+	super(node)
+	clickable.disabled = false
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rblo1"]
+size = Vector2(189, 638)
+
+[node name="Stack" type="Node2D" groups=["Stack"]]
+script = SubResource("GDScript_sgi2t")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 0.486275)
+scale = Vector2(1.5, 5)
+texture = ExtResource("1_grew4")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_rblo1")
+disabled = true
+
+[node name="Child" type="Node2D" parent="."]
+position = Vector2(0, -235)
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

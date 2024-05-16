@@ -1,0 +1,114 @@
+[gd_scene load_steps=5 format=3 uid="uid://ioa2tyh28iky"]
+
+[ext_resource type="Texture2D" uid="uid://umfmnc5wj3qj" path="res://icon.svg" id="1_i24tw"]
+
+[sub_resource type="GDScript" id="GDScript_hwsoe"]
+script/source = "extends Parent
+
+var parent = null
+var value = null
+
+@onready var sprite = $Sprite2D
+@onready var sprite_texture = sprite.texture
+@onready var parent_clickable = $Area2D/ParentCollisionShape
+@onready var normal_clickable = $Area2D/NormalCollisionShape
+
+func _ready():
+	child_carrier = $Child
+	
+func setup(val):
+	value = val
+	$Label.text = str(val)
+
+func add_card(node):
+	super(node)
+	enable_clickable(\"Parent\")
+	
+func remove_card(node):
+	super(node)
+	enable_clickable(\"Normal\")
+	
+func is_valid_parent(value):
+	return self.value == value + 1
+	
+func change_parent(new_parent):
+	if new_parent.is_in_group(\"Card\"):
+		if not new_parent.is_valid_parent(value):
+			return false
+		
+	if parent != null:
+		parent.remove_card(self)
+	parent = new_parent
+	return true
+	
+func pickup(node):
+	sprite.texture = null
+	
+	var drag_sprite = Sprite2D.new()
+	drag_sprite.set_texture(sprite_texture)
+	node.add_child(drag_sprite)
+	drag_sprite.global_position = self.global_position
+	
+	if has_child:
+		child_card.pickup(drag_sprite)
+	disable_clickable()
+	
+	return drag_sprite
+	
+func drop():
+	sprite.texture = sprite_texture
+	if has_child:
+		child_card.drop()
+		enable_clickable(\"Parent\")
+	else:
+		enable_clickable(\"Normal\")
+	
+func disable_clickable():
+	parent_clickable.disabled = true
+	normal_clickable.disabled = true
+	
+func enable_clickable(who):
+	match who:
+		\"Parent\": 
+			parent_clickable.disabled = false
+			normal_clickable.disabled = true
+		\"Normal\":
+			parent_clickable.disabled = true
+			normal_clickable.disabled = false
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_85u06"]
+size = Vector2(126, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hvfuc"]
+size = Vector2(126, 125.5)
+
+[node name="Card" type="Node2D" groups=["Card"]]
+script = SubResource("GDScript_hwsoe")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_i24tw")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -60.0
+offset_top = -60.0
+offset_right = -20.0
+offset_bottom = -37.0
+text = "N/A"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="ParentCollisionShape" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -49)
+shape = SubResource("RectangleShape2D_85u06")
+disabled = true
+
+[node name="NormalCollisionShape" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 0.25)
+shape = SubResource("RectangleShape2D_hvfuc")
+
+[node name="Child" type="Node2D" parent="."]
+position = Vector2(0, 28)
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

@@ -1,0 +1,258 @@
+[gd_scene load_steps=5 format=3 uid="uid://bppbr24s7ubgd"]
+
+[ext_resource type="Script" path="res://window.gd" id="1_as1d2"]
+[ext_resource type="Texture2D" uid="uid://8crbh7rnij0m" path="res://assets/icon.svg" id="2_w8207"]
+[ext_resource type="Texture2D" uid="uid://63rgq7ru8vwv" path="res://assets/minimize.png" id="3_3pgmx"]
+[ext_resource type="Texture2D" uid="uid://bueyfmr5v5ad2" path="res://assets/Close_small.png" id="4_m1cci"]
+
+[node name="Window" type="Node2D"]
+script = ExtResource("1_as1d2")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+offset_right = 201.0
+offset_bottom = 96.0
+texture = ExtResource("2_w8207")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer"]
+layout_mode = 2
+
+[node name="HeaderBar" type="TextureButton" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+size_flags_vertical = 0
+texture_normal = ExtResource("3_3pgmx")
+ignore_texture_size = true
+stretch_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/HeaderBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/HeaderBar/MarginContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="CloseButton" type="TextureButton" parent="NinePatchRect/MarginContainer/VBoxContainer/HeaderBar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("4_m1cci")
+stretch_mode = 3
+
+[node name="TextEdit" type="TextEdit" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "fasdfasdfasdfasfdsadfasfasfasfasfasfasdfafdasdfasfasdfsfsdfsfsdfs"
+
+[node name="ResizeRight" type="TextureButton" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_default_cursor_shape = 10
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="NinePatchRect/ResizeRight"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+editor_only = false
+
+[node name="ResizeLeft" type="TextureButton" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 4.0
+grow_vertical = 2
+mouse_default_cursor_shape = 10
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="NinePatchRect/ResizeLeft"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+editor_only = false
+
+[node name="ResizeBottom" type="TextureButton" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 9
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="NinePatchRect/ResizeBottom"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+editor_only = false
+
+[node name="ResizeTop" type="TextureButton" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 4.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 9
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="NinePatchRect/ResizeTop"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+editor_only = false
+
+[node name="ResizeTR" type="TextureButton" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -4.0
+offset_bottom = 4.0
+grow_horizontal = 0
+mouse_default_cursor_shape = 11
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="NinePatchRect/ResizeTR"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+border_color = Color(8.66354e-07, 0.630301, 0.464204, 1)
+editor_only = false
+
+[node name="ResizeTL" type="TextureButton" parent="NinePatchRect"]
+layout_mode = 1
+offset_right = 4.0
+offset_bottom = 4.0
+mouse_default_cursor_shape = 12
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="NinePatchRect/ResizeTL"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+border_color = Color(8.66354e-07, 0.630301, 0.464204, 1)
+editor_only = false
+
+[node name="ResizeBR" type="TextureButton" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -4.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_default_cursor_shape = 12
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="NinePatchRect/ResizeBR"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+border_color = Color(8.66354e-07, 0.630301, 0.464204, 1)
+editor_only = false
+
+[node name="ResizeBL" type="TextureButton" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+offset_right = 4.0
+grow_vertical = 0
+mouse_default_cursor_shape = 11
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="NinePatchRect/ResizeBL"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+border_color = Color(8.66354e-07, 0.630301, 0.464204, 1)
+editor_only = false
+
+[connection signal="button_down" from="NinePatchRect/MarginContainer/VBoxContainer/HeaderBar" to="." method="_on_header_bar_button_down"]
+[connection signal="button_up" from="NinePatchRect/MarginContainer/VBoxContainer/HeaderBar" to="." method="_on_header_bar_button_up"]
+[connection signal="pressed" from="NinePatchRect/MarginContainer/VBoxContainer/HeaderBar/MarginContainer/HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="button_down" from="NinePatchRect/ResizeRight" to="." method="_on_resize_right_button_down"]
+[connection signal="button_down" from="NinePatchRect/ResizeLeft" to="." method="_on_resize_left_button_down"]
+[connection signal="button_down" from="NinePatchRect/ResizeBottom" to="." method="_on_resize_bottom_button_down"]
+[connection signal="button_down" from="NinePatchRect/ResizeTop" to="." method="_on_resize_top_button_down"]
+[connection signal="button_down" from="NinePatchRect/ResizeTR" to="." method="_on_resize_tr_button_down"]
+[connection signal="button_down" from="NinePatchRect/ResizeTL" to="." method="_on_resize_tl_button_down"]
+[connection signal="button_down" from="NinePatchRect/ResizeBR" to="." method="_on_resize_br_button_down"]
+[connection signal="button_down" from="NinePatchRect/ResizeBL" to="." method="_on_resize_bl_button_down"]
